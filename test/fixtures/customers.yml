@@ -1,0 +1,11 @@
+maria:
+  name: María García
+  email: maria@test.com
+  phone: "1234567890"
+  address: Calle Principal 123
+
+juan:
+  name: Juan López
+  email: juan@test.com
+  phone: "0987654321"
+  address: Avenida Libertad 456

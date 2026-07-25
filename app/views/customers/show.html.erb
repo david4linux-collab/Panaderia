@@ -1,0 +1,53 @@
+<div class="mb-6">
+  <%= link_to "← Volver", customers_path, class: "text-gray-600 hover:text-gray-800" %>
+</div>
+
+<div class="bg-white rounded-lg shadow p-6">
+  <h1 class="text-3xl font-bold text-gray-800"><%= @customer.name %></h1>
+
+  <div class="mt-6">
+    <h2 class="text-xl font-semibold text-gray-800 mb-3">Detalles</h2>
+    <p class="text-gray-600 mb-2"><strong>Email:</strong> <%= @customer.email %></p>
+    <p class="text-gray-600 mb-2"><strong>Teléfono:</strong> <%= @customer.phone %></p>
+    <p class="text-gray-600 mb-2"><strong>Dirección:</strong> <%= @customer.address %></p>
+  </div>
+</div>
+
+<div class="mt-6">
+  <h2 class="text-xl font-semibold text-gray-800 mb-3">Historial de Pedidos</h2>
+  <% if @orders.any? %>
+    <div class="bg-white rounded-lg shadow overflow-hidden">
+      <table class="min-w-full divide-y divide-gray-200">
+        <thead class="bg-gray-50">
+          <tr>
+            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Pedido</th>
+            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Fecha</th>
+            <th class="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider">Estado</th>
+            <th class="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">Total</th>
+          </tr>
+        </thead>
+        <tbody class="bg-white divide-y divide-gray-200">
+          <% @orders.each do |order| %>
+            <tr>
+              <td class="px-6 py-4 whitespace-nowrap"><%= link_to "##{order.id}", order, class: "text-blue-600 hover:text-blue-800" %></td>
+              <td class="px-6 py-4 whitespace-nowrap text-gray-600"><%= l(order.created_at, format: :short) %></td>
+              <td class="px-6 py-4 whitespace-nowrap text-center">
+                <span class="px-2 py-1 text-xs font-semibold rounded-full bg-<%= order.status == 'completed' ? 'green' : order.status == 'cancelled' ? 'red' : 'yellow' %>-100 text-<%= order.status == 'completed' ? 'green' : order.status == 'cancelled' ? 'red' : 'yellow' %>-800">
+                  <%= order.status %>
+                </span>
+              </td>
+              <td class="px-6 py-4 whitespace-nowrap text-right font-medium"><%= number_to_currency(order.total) %></td>
+            </tr>
+          <% end %>
+        </tbody>
+      </table>
+    </div>
+  <% else %>
+    <p class="text-gray-500">No hay pedidos registrados para este cliente.</p>
+  <% end %>
+</div>
+
+<div class="mt-6 flex justify-end space-x-3">
+  <%= link_to "Editar", edit_customer_path(@customer), class: "btn-secondary" %>
+  <%= link_to "Eliminar", @customer, method: :delete, data: { confirm: "¿Estás seguro?" }, class: "btn-danger" %>
+</div>

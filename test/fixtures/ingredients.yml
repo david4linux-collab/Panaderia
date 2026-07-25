@@ -1,0 +1,17 @@
+harina:
+  name: Harina de trigo
+  unit: kg
+  cost: 2.50
+  stock: 50.0
+
+levadura:
+  name: Levadura
+  unit: g
+  cost: 0.10
+  stock: 500.0
+
+azucar:
+  name: Azúcar
+  unit: kg
+  cost: 3.00
+  stock: 0.5

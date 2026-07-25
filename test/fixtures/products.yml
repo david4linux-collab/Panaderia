@@ -1,0 +1,13 @@
+pan_lactal:
+  name: Pan Lactal
+  description: Pan blanco suave
+  price: 4.50
+  category: pan
+  available: true
+
+croissant:
+  name: Croissant
+  description: Croissant de mantequilla
+  price: 3.00
+  category: pasteleria
+  available: true

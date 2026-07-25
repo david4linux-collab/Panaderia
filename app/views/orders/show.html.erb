@@ -1,0 +1,65 @@
+<div class="mb-6">
+  <%= link_to "← Volver", orders_path, class: "text-gray-600 hover:text-gray-800" %>
+</div>
+
+<div class="bg-white rounded-lg shadow p-6">
+  <div class="flex justify-between items-start mb-6">
+    <div>
+      <h1 class="text-3xl font-bold text-gray-800">Pedido #<%= @order.id %></h1>
+      <p class="text-gray-500 mt-1">Cliente: <%= link_to @order.customer.name, @order.customer, class: "text-blue-600 hover:text-blue-800" %></p>
+    </div>
+    <span class="px-3 py-1 text-sm font-semibold rounded-full bg-<%= @order.status == 'completed' ? 'green' : @order.status == 'cancelled' ? 'red' : 'yellow' %>-100 text-<%= @order.status == 'completed' ? 'green' : @order.status == 'cancelled' ? 'red' : 'yellow' %>-800">
+      <%= @order.status %>
+    </span>
+  </div>
+
+  <div class="flex gap-4 mb-6">
+    <% @order.statuses.each_key do |status| %>
+      <%= link_to status, update_status_order_path(@order, status: status), method: :patch, class: "text-sm text-gray-600 hover:text-gray-800" %>
+    <% end %>
+  </div>
+
+  <% if @order.notes.present? %>
+    <div class="mb-6 p-4 bg-gray-50 rounded-lg">
+      <h2 class="text-sm font-medium text-gray-500 mb-1">Notas</h2>
+      <p class="text-gray-800"><%= @order.notes %></p>
+    </div>
+  <% end %>
+
+  <h2 class="text-xl font-semibold text-gray-800 mb-3">Detalles del Pedido</h2>
+  <table class="w-full mb-6">
+    <thead>
+      <tr>
+        <th class="text-left text-sm font-medium text-gray-500">Producto</th>
+        <th class="text-right text-sm font-medium text-gray-500">Precio</th>
+        <th class="text-right text-sm font-medium text-gray-500">Cantidad</th>
+        <th class="text-right text-sm font-medium text-gray-500">Subtotal</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% @order.order_items.each do |item| %>
+        <tr>
+          <td class="py-3 text-gray-800"><%= item.product.name %></td>
+          <td class="py-3 text-right text-gray-600"><%= number_to_currency(item.price) %></td>
+          <td class="py-3 text-right text-gray-600"><%= item.quantity %></td>
+          <td class="py-3 text-right font-medium"><%= number_to_currency(item.subtotal) %></td>
+        </tr>
+      <% end %>
+    </tbody>
+    <tfoot>
+      <tr class="border-t border-gray-200">
+        <td colspan="3" class="py-3 text-right font-medium text-gray-600">Total</td>
+        <td class="py-3 text-right font-bold text-lg text-green-600"><%= number_to_currency(@order.total) %></td>
+      </tr>
+    </tfoot>
+  </table>
+
+  <div class="text-sm text-gray-500">
+    <p>Creado: <%= l(@order.created_at, format: :long) %></p>
+  </div>
+</div>
+
+<div class="mt-4 flex justify-end space-x-3">
+  <%= link_to "Editar", edit_order_path(@order), class: "btn-secondary" %>
+  <%= link_to "Eliminar", @order, method: :delete, data: { confirm: "¿Estás seguro?" }, class: "btn-danger" %>
+</div>

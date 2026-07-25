@@ -1,0 +1,43 @@
+<div class="flex justify-between items-center mb-6">
+  <h1 class="text-3xl font-bold text-gray-800">Ingredientes</h1>
+  <%= link_to "Nuevo Ingrediente", new_ingredient_path, class: "btn-primary" %>
+</div>
+
+<% if @low_stock.any? %>
+  <div class="mb-4 p-4 bg-yellow-100 border border-yellow-200 text-yellow-800 rounded-lg">
+    <strong>Alerta de stock bajo:</strong> <%= @low_stock.map(&:name).join(", ") %>
+  </div>
+<% end %>
+
+<div class="bg-white rounded-lg shadow overflow-hidden">
+  <table class="min-w-full divide-y divide-gray-200">
+    <thead class="bg-gray-50">
+      <tr>
+        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Nombre</th>
+        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Unidad</th>
+        <th class="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">Costo</th>
+        <th class="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">Stock</th>
+        <th class="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">Acciones</th>
+      </tr>
+    </thead>
+    <tbody class="bg-white divide-y divide-gray-200">
+      <% @ingredients.each do |ingredient| %>
+        <tr>
+          <td class="px-6 py-4 whitespace-nowrap">
+            <div class="font-medium text-gray-800"><%= ingredient.name %></div>
+          </td>
+          <td class="px-6 py-4 whitespace-nowrap text-gray-600"><%= ingredient.unit %></td>
+          <td class="px-6 py-4 whitespace-nowrap text-right text-gray-800"><%= number_to_currency(ingredient.cost) %></td>
+          <td class="px-6 py-4 whitespace-nowrap text-right">
+            <span class="<%= 'text-red-600 font-bold' if ingredient.low_stock? %>"><%= ingredient.stock %></span>
+          </td>
+          <td class="px-6 py-4 whitespace-nowrap text-right space-x-2">
+            <%= link_to "Ver", ingredient, class: "text-blue-600 hover:text-blue-800" %>
+            <%= link_to "Editar", edit_ingredient_path(ingredient), class: "text-gray-600 hover:text-gray-800" %>
+            <%= link_to "Eliminar", ingredient, method: :delete, data: { confirm: "¿Estás seguro?" }, class: "text-red-600 hover:text-red-800" %>
+          </td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+</div>

@@ -1,0 +1,69 @@
+<div class="mb-6">
+  <%= link_to "← Volver", products_path, class: "text-gray-600 hover:text-gray-800" %>
+</div>
+
+<div class="bg-white rounded-lg shadow p-6">
+  <h1 class="text-3xl font-bold text-gray-800 mb-6">Editar Producto</h1>
+
+  <%= form_with(model: @product, local: true) do |f| %>
+    <% if @product.errors.any? %>
+      <div class="mb-4 p-4 bg-red-100 border border-red-200 text-red-800 rounded-lg">
+        <ul class="list-disc list-inside">
+          <% @product.errors.each do |attribute, message| %>
+            <li><%= message %></li>
+          <% end %>
+        </ul>
+      </div>
+    <% end %>
+
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+      <div>
+        <%= f.label :name, class: "block text-sm font-medium text-gray-700 mb-1" %>
+        <%= f.text_field :name, class: "w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent" %>
+      </div>
+
+      <div>
+        <%= f.label :price, class: "block text-sm font-medium text-gray-700 mb-1" %>
+        <%= f.number_field :price, step: 0.01, class: "w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent" %>
+      </div>
+    </div>
+
+    <div class="mt-4">
+      <%= f.label :category_id, class: "block text-sm font-medium text-gray-700 mb-1" %>
+      <%= f.collection_select :category_id, @categories, :id, :name, { include_blank: "Selecciona una categoría" }, class: "w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent" %>
+    </div>
+
+    <div class="mt-4">
+      <%= f.label :description, class: "block text-sm font-medium text-gray-700 mb-1" %>
+      <%= f.text_area :description, rows: 3, class: "w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent" %>
+    </div>
+
+    <div class="mt-4">
+      <div class="flex items-center">
+        <%= f.check_box :available, class: "h-4 w-4 text-blue-600 focus:ring-blue-500 border-gray-300 rounded" %>
+        <%= f.label :available, "Producto disponible para pedidos", class: "ml-2 text-sm text-gray-600" %>
+      </div>
+    </div>
+
+    <div class="mt-6">
+      <h2 class="text-xl font-semibold text-gray-800 mb-4">Receta (Ingredientes)</h2>
+      <%= f.fields_for :product_ingredients do |pif| %>
+        <div class="mb-3 flex items-end gap-3">
+          <div class="flex-1">
+            <%= pif.label :ingredient_id, "Ingrediente", class: "block text-sm font-medium text-gray-700 mb-1" %>
+            <%= pif.collection_select :ingredient_id, @ingredients, :id, :name, {}, class: "w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent" %>
+          </div>
+          <div class="w-32">
+            <%= pif.label :quantity, "Cantidad", class: "block text-sm font-medium text-gray-700 mb-1" %>
+            <%= pif.number_field :quantity, step: 0.001, class: "w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent" %>
+          </div>
+        </div>
+      <% end %>
+    </div>
+
+    <div class="flex justify-end space-x-3 mt-6">
+      <%= link_to "Cancelar", products_path, class: "btn-secondary" %>
+      <%= f.submit "Actualizar", class: "btn-primary" %>
+    </div>
+  <% end %>
+</div>

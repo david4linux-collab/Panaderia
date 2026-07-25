@@ -1,0 +1,14 @@
+pan_harina:
+  product: pan_lactal
+  ingredient: harina
+  quantity: 0.5
+
+pan_levadura:
+  product: pan_lactal
+  ingredient: levadura
+  quantity: 10.0
+
+pan_azucar:
+  product: pan_lactal
+  ingredient: azucar
+  quantity: 0.02

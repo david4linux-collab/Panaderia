@@ -1,0 +1,9 @@
+pedido1:
+  customer: maria
+  status: completed
+  total: 12.00
+
+pedido2:
+  customer: juan
+  status: pending
+  total: 45.00

@@ -1,0 +1,17 @@
+item1:
+  order: pedido1
+  product: pan_lactal
+  quantity: 2
+  price: 4.50
+
+item2:
+  order: pedido1
+  product: croissant
+  quantity: 1
+  price: 3.00
+
+item3:
+  order: pedido2
+  product: croissant
+  quantity: 15
+  price: 3.00
